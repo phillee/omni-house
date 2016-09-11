@@ -67,11 +67,9 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // adapter: 'mongo',
-  // host: 'localhost',
-  // port: 27017,
-  // db: 'sails',
-  // collection: 'sessions',
+  adapter: 'mongo',
+  collection: 'sessions',
+  url: 'mongodb://omnihouse:Sal71RFJ@ds029466.mlab.com:29466/heroku_ngc78lvx'
 
   /***************************************************************************
   *                                                                          *

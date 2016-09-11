@@ -22,10 +22,11 @@
 
 module.exports.routes = {
   '/': '/auth/authorize',
-  '/oauth/token' : 'AuthController.token',
-  'GET /auth/authorize' : 'AuthController.authorize',
-  'POST /auth/decision' : 'AuthController.decision',
-  'POST /login' : 'AuthController.authenticate',
+  '/oauth/token': 'AuthController.token',
+  'GET /auth/authorize': 'AuthController.authorize',
+  'POST /auth/decision': 'AuthController.decision',
+  'POST /login': 'AuthController.authenticate',
   // not for production
-  '/test' : 'AuthController.test'
+  '/test': 'AuthController.test',
+  '/clients': 'ClientController.list'
 }
