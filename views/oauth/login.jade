@@ -1,0 +1,16 @@
+extends ../layout
+
+block body
+  .container(style='margin-top: 20px')
+    .row
+      .col-md-8.col-md-offset-2
+        form
+          .form-group
+            label Email
+            input.form-control(type='email', placeholder='Email')
+          .form-group
+            label Password
+            input.form-control(type='password', placeholder='Password')
+
+
+          button.btn.btn-default(type='submit') Submit

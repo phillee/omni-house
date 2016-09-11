@@ -1,0 +1,21 @@
+{
+  "name": "omni-house",
+  "description": "a Sails application",
+  "main": "app.js",
+  "authors": [
+    "phillee"
+  ],
+  "license": "MIT",
+  "private": true,
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
