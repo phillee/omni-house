@@ -16,7 +16,16 @@ html
     block styles
 
   body
-    block body
+    block header
+      include header
+
+    - var flashMessage = req.flash('message')
+
+    if flashMessage && flashMessage != ''
+      .container
+        .alert.alert-info= flashMessage
+
+    block content
 
     // TEMPLATES
     

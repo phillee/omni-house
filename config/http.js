@@ -32,13 +32,7 @@ module.exports.http = {
     ],
 
     passportInit    : passport.initialize(),
-    passportSession : passport.session(),
-    setDefaultUser : (req, res, next) => {
-      User.findOne({ email : 'me@example.com' }, (err, user) => {
-        req.user = user
-        next()
-      })
-    }
+    passportSession : passport.session()
   }
 
   /***************************************************************************

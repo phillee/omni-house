@@ -10,26 +10,7 @@
  */
 
 module.exports.bootstrap = function(done) {
-  async.parallel([ makeUser, makeClient ], done)
-
-  function makeUser(done) {
-    User.findOne({email: 'me@example.com'}, (err, user) => {
-      if (!user) {
-        User.create(
-          {
-            email: 'me@example.com',
-            password: 'password',
-          }
-        ).exec((err, user) => {
-          console.log('default user', user)
-          done()
-        })
-      } else {
-        console.log('default user', user)
-        done()
-      }
-    })
-  }
+  async.parallel([ makeClient ], done)
 
   function makeClient(done) {
     Client.findOne({ name: 'Alexa' }, (err, client) => {

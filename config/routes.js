@@ -25,7 +25,14 @@ module.exports.routes = {
   '/oauth/token': 'AuthController.token',
   'GET /auth/authorize': 'AuthController.authorize',
   'POST /auth/decision': 'AuthController.decision',
-  'POST /login': 'AuthController.authenticate',
+  // 'POST /login': 'AuthController.authenticate',
+
+  // users
+  '/users/login': 'UserController.login',
+  'POST /users/authenticate': 'UserController.authenticate',
+  'POST /users/register': 'UserController.register',
+  '/users/logout': 'UserController.logout',
+
   // not for production
   '/test': 'AuthController.test',
   '/clients': 'ClientController.list'

@@ -1,23 +1,8 @@
-var passport = require('passport')
-
-exports.authenticate = (req, res) => {
-  passport.authenticate('local', (err, user, exception) => {
-    if ((err) || (!user)) return res.error(exception, '/login')
-
-		req.logIn(
-      user,
-      (err) => {
-        if (err) return res.redirect('/login')
-	      res.redirect('/')
-	  	}
-    )
-  })(req, res)
-}
-
 exports.authorize = (req, res, next) => {
 	res.view('auth/authorize', { oauth2 : req.oauth2 })
 }
 
+// oauth2
 exports.decision = (req, res, next) => {
 }
 

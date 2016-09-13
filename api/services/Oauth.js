@@ -5,6 +5,7 @@ var oauth2orize         = require('oauth2orize'),
 
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer()
+module.exports = server
 
 server.serializeClient((client, done) => {
   return done(null, client.id)
@@ -27,7 +28,7 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
     scope: ares.scope
   }).exec((err, code) => {
     if (err) return done(err,null)
-    return done(null,code.code)
+    return done(null, code.code)
   })
 }))
 
@@ -48,9 +49,6 @@ server.grant(oauth2orize.grant.token(function(client, user, ares, done) {
     }
   });
 }));
-
-
-module.exports = server
 
 // Exchange authorization code for access token
 server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, done) {
@@ -135,5 +133,3 @@ server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken,
         });
     });
 }));
-
-module.exports = server
