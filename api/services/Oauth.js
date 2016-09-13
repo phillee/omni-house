@@ -22,9 +22,9 @@ server.deserializeClient((id, done) => {
 // Generate authorization code
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
   AuthCode.create({
-    clientId: client.clientId,
+    client: client,
     redirectURI: redirectURI,
-    userId: '1',
+    user: user,
     scope: ares.scope
   }).exec((err, code) => {
     if (err) return done(err,null)
@@ -35,11 +35,11 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
 // Generate access token for Implicit flow
 // Only access token is generated in this flow, no refresh token is issued
 server.grant(oauth2orize.grant.token(function(client, user, ares, done) {
-  AccessToken.destroy({ userId: user.id, clientId: client.clientId }, function (err) {
+  AccessToken.destroy({ user: user, client: client.client }, function (err) {
     if (err){
       return done(err);
     } else {
-      AccessToken.create({ userId: user.id, clientId: client.clientId }, function(err, accessToken){
+      AccessToken.create({ user: user, client: client.client }, function(err, accessToken){
         if(err) {
           return done(err);
         } else {
@@ -57,22 +57,22 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, do
   ).exec((err, code) => {
    if (err || !code) return done(err)
 
-   // if (client.clientId !== code.clientId) return done(null, false)
+   // if (client.client !== code.client) return done(null, false)
 
    // Remove Refresh and Access tokens and create new ones
-   RefreshToken.destroy({ userId: code.userId, clientId: code.clientId }, function (err) {
+   RefreshToken.destroy({ user: code.user, client: code.client }, function (err) {
      if (err) {
        return done(err);
      } else {
-       AccessToken.destroy({ userId: code.userId, clientId: code.clientId }, function (err) {
+       AccessToken.destroy({ user: code.user, client: code.client }, function (err) {
          if (err){
            return done(err);
          } else {
-           RefreshToken.create({ userId: code.userId, clientId: code.clientId }, function(err, refreshToken){
+           RefreshToken.create({ user: code.user, client: code.client }, function(err, refreshToken){
              if(err){
                return done(err);
              } else {
-               AccessToken.create({ userId: code.userId, clientId: code.clientId }, function(err, accessToken){
+               AccessToken.create({ user: code.user, client: code.client }, function(err, accessToken){
                  if(err) {
                    return done(err);
                  } else {
@@ -99,25 +99,25 @@ server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken,
         if (!token) { return done(null, false); }
         if (!token) { return done(null, false); }
 
-        User.findOne({id: token.userId}, function(err, user) {
+        User.findOne({id: token.user}, function(err, user) {
 
             if (err) { return done(err); }
             if (!user) { return done(null, false); }
 
             // Remove Refresh and Access tokens and create new ones
-            RefreshToken.destroy({ userId: user.id, clientId: client.clientId }, function (err) {
+            RefreshToken.destroy({ user: user.id, client: client.client }, function (err) {
               if (err) {
                 return done(err);
               } else {
-                AccessToken.destroy({ userId: user.id, clientId: client.clientId }, function (err) {
+                AccessToken.destroy({ user: user.id, client: client.client }, function (err) {
                   if (err){
                     return done(err);
                   } else {
-                    RefreshToken.create({ userId: user.id, clientId: client.clientId }, function(err, refreshToken){
+                    RefreshToken.create({ user: user.id, client: client.client }, function(err, refreshToken){
                       if(err){
                         return done(err);
                       } else {
-                        AccessToken.create({ userId: user.id, clientId: client.clientId }, function(err, accessToken){
+                        AccessToken.create({ user: user.id, client: client.client }, function(err, accessToken){
                           if(err) {
                             return done(err);
                           } else {
