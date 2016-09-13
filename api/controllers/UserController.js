@@ -12,7 +12,6 @@ exports.logout = (req, res) => {
 exports.authenticate = (req, res) => {
   passport.authenticate('local', function(err, user, info) {
     if ((err) || (!user)) {
-      console.log(err)
       req.flash('message', 'Incorrect password or email')
       return res.redirect('/users/login');
     }

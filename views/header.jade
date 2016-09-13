@@ -11,9 +11,9 @@ nav.navbar.navbar-default
     // Collect the nav links, forms, and other content for toggling
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        //- if req.user
-        //-   li
-        //-     a(href='/properties') Properties
+        if req.user
+          li
+            a(href='/integrations') Integrations
 
       ul.nav.navbar-nav.navbar-right
         if req.user

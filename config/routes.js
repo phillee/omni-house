@@ -35,5 +35,7 @@ module.exports.routes = {
 
   // not for production
   '/test': 'AuthController.test',
-  '/clients': 'ClientController.list'
+  '/clients': 'ClientController.list',
+
+  '/integrations': 'IntegrationController.list'
 }

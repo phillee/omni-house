@@ -1,0 +1,5 @@
+extends ../layout
+
+block content
+  each accessToken in accessTokens
+    pre= JSON.stringify(accessToken, null, 2)

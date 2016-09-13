@@ -3,8 +3,7 @@ exports.authorize = (req, res, next) => {
 }
 
 // oauth2
-exports.decision = (req, res, next) => {
-}
+exports.decision = Oauth.decision
 
 exports.token = (req, res, next) => {
 }
