@@ -1,7 +1,7 @@
-var oauth2orize         = require('oauth2orize'),
-    passport            = require('passport'),
-    login               = require('connect-ensure-login'),
-    bcrypt              = require('bcrypt')
+var oauth2orize = require('oauth2orize'),
+    passport = require('passport'),
+    login = require('connect-ensure-login'),
+    bcrypt = require('bcrypt')
 
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer()

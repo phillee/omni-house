@@ -21,7 +21,7 @@ var Oauth = require('../api/services/Oauth')
 module.exports.policies = {
 
   AuthController : {
-    authorize : 'oauthAuthorize',
+    authorize : [ 'isLoggedIn', 'oauthAuthorize' ],
     decision : Oauth.decision(),
     token : Oauth.token()
   }

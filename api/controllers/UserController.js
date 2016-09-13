@@ -19,7 +19,9 @@ exports.authenticate = (req, res) => {
       if (err) {
         res.redirect('/users/login');
       } else {
-        res.redirect('/');
+        var redirectUrl = req.session.redirectUrl;
+        req.session.redirectUrl = null;
+        res.redirect(redirectUrl || '/');
       }
     })
   })(req, res)
