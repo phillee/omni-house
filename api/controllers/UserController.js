@@ -9,7 +9,7 @@ exports.logout = (req, res) => {
   res.redirect('/');
 }
 
-exports.authenticate = (req, res) => {
+exports.authenticate = function(req, res) {
   passport.authenticate('local', function(err, user, info) {
     if ((err) || (!user)) {
       req.flash('message', 'Incorrect password or email')

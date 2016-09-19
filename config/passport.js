@@ -6,61 +6,51 @@ var bcrypt = require('bcrypt'),
     LocalStrategy = require('passport-local').Strategy,
     ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
 
-    passport.serializeUser(function(user, done) {
-      done(null, user.id);
-    });
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-    passport.deserializeUser(function(id, done) {
-      User.findOne({id:id}, function (err, user) {
-        done(err, user);
+passport.deserializeUser(function(id, done) {
+  User.findOne({id:id}, function (err, user) {
+    done(err, user);
+  });
+});
+
+/**
+ * LocalStrategy
+ *
+ * This strategy is used to authenticate users based on a username and password.
+ * Anytime a request is made to authorize an application, we must ensure that
+ * a user is logged in before asking them to approve the request.
+ */
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(username, password, done) {
+    User
+    .findOne({ email: username })
+    .exec(function (err, user) {
+      if (!user) {
+        return done(null, false, { message: 'Unknown user ' + username });
+      }
+
+      bcrypt.compare(password, user.hashedPassword, function(err, res) {
+        if (err) {
+          return done(err, null);
+        } else {
+          if (!res) {
+            return done( null, false, { message: 'Invalid password' });
+          } else {
+            return done(null, user);
+          }
+        }
       });
     });
-
-    /**
-     * LocalStrategy
-     *
-     * This strategy is used to authenticate users based on a username and password.
-     * Anytime a request is made to authorize an application, we must ensure that
-     * a user is logged in before asking them to approve the request.
-     */
-     passport.use(
-     new LocalStrategy(
-
-     function (username, password, done) {
-
-         process.nextTick(
-
-
-         function () {
-             User.findOne({
-                 email: username
-             }).exec(function (err, user) {
-                 if (err) {
-                     console.log(err);
-                     return;
-                 }
-
-                 if (!user) {
-                     return done(
-                     null, false, {
-                         message: 'Unknown user ' + username
-                     });
-                 }
-
-                 bcrypt.compare(password, user.hashedPassword, function(err, res){
-                   if(err){
-                     return done(err, null);
-                   } else {
-                     if (!res) {
-                       return done( null, false, { message: 'Invalid password' });
-                     } else {
-                       return done(null, user);
-                     }
-                   }
-                 });
-             })
-         });
-     }));
+  }
+));
 
 /**
  * BasicStrategy & ClientPasswordStrategy
@@ -90,13 +80,13 @@ function (username, password, done) {
         bcrypt.compare(password, user.hashedPassword, function(err, res){
           if(err){
             return done(err, null);
-          } else { 
+          } else {
             if (!res) {
               return done( null, false, { message: 'Invalid password' });
-            } else { 
+            } else {
               return done(null, user);
-            } 
-          } 
+            }
+          }
         });
     });
 }));
