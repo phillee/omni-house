@@ -1,0 +1,21 @@
+extends ../content_layout
+
+block inner_content
+  .container
+    .col-sm-4
+      h3.form-signin-heading Register
+      form(action='/users/register' method='post')
+        .form-group
+          input#inputEmail.form-control(type='email', name='email', placeholder='Email address', required='', autofocus='')
+
+        .form-group
+          input#inputPassword.form-control(type='password', name='password', placeholder='Password', required='')
+
+        .form-group
+          input.form-control(type='text', name='firstName', placeholder='First name')
+
+        .form-group
+          input.form-control(type='text', name='lastName', placeholder='Last name')
+
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
+

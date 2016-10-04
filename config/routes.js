@@ -21,7 +21,7 @@
  */
 
 module.exports.routes = {
-  '/': '/auth/authorize',
+  '/': 'HomeController.index',
   '/oauth/token': 'AuthController.token',
   'GET /auth/authorize': 'AuthController.authorize',
   'POST /auth/decision': 'AuthController.decision',
@@ -29,13 +29,22 @@ module.exports.routes = {
 
   // users
   '/users/login': 'UserController.login',
+  '/users/new': 'UserController.new',
   'POST /users/authenticate': 'UserController.authenticate',
   'POST /users/register': 'UserController.register',
   '/users/logout': 'UserController.logout',
+
+  // integrations
+  'GET /integrations': 'IntegrationController.list',
+  'GET /integrations/new': 'IntegrationController.new',
+  'POST /integrations': 'IntegrationController.create',
 
   // not for production
   '/test': 'AuthController.test',
   '/clients': 'ClientController.list',
 
-  '/integrations': 'IntegrationController.list'
+  // learn more
+  '/learn-more': 'HomeController.learnMore',
+
+  '/discover': 'DeviceController.discover'
 }

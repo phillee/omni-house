@@ -10,6 +10,6 @@ exports.attributes = {
 }
 
 exports.beforeCreate = (values, next) => {
-  values.token = UtilsService.uid(255)
-  next()
+  values.token = UtilsService.uid(255);
+  next();
 }

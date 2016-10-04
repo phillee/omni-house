@@ -15,6 +15,6 @@ exports.attributes = {
 }
 
 exports.beforeCreate = (values, next) => {
-  values.code = UtilsService.uid(16)
-  next()
+  values.code = UtilsService.uid(16);
+  next();
 }

@@ -24,3 +24,10 @@ exports.beforeCreate = (values, next) => {
     next();
   });
 }
+
+exports.beforeValidate = (values, next) => {
+  if (values.email) {
+    values.normalizedEmail = values.email.toLowerCase();
+  }
+  next();
+}

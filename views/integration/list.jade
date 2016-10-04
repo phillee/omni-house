@@ -1,5 +1,13 @@
 extends ../layout
 
 block content
-  each accessToken in accessTokens
-    pre= JSON.stringify(accessToken, null, 2)
+  .container
+    .col-sm-12
+      h3.form-signin-heading
+        | Integrations
+        a.ml-10.btn.btn-sm.btn-success(href='/integrations/new')
+          i.fa.fa-plus.mr-5
+          | New
+
+      each accessToken in accessTokens
+        pre= JSON.stringify(accessToken, null, 2)

@@ -4,7 +4,7 @@ html
     if locals.title
       title= title
     else
-      title New Sails App
+      title Alexa Bridge
 
     // Viewport mobile tag for sensible mobile support
     meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
@@ -27,13 +27,17 @@ html
 
     block content
 
+    block footer
+      include footer
+
     // TEMPLATES
-    
+
     // TEMPLATES END
 
     // SCRIPTS
     script(src="/js/dependencies/jquery.min.js")
     script(src="/js/dependencies/sails.io.js")
     script(src="/js/bootstrap.min.js")
+    script(src="/js/parallax.min.js")
     // SCRIPTS END
 

@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  .container
+    .col-sm-4
+      h3.form-signin-heading Create Integration
+      form(action='/integration' method='post')
+        .form-group
+          select.form-control(name='accountType', required='')
+            option(value='Indigo') Indigo
+
+        .form-group
+          input.form-control(type='text', name='username', placeholder='Username', required='', autofocus='')
+
+        .form-group
+          input.form-control(type='password', name='password', placeholder='Password', required='')
+
+        .form-group
+          input.form-control(type='text', name='url', placeholder='Url', required='')
+
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Create

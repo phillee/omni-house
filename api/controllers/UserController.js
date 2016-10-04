@@ -4,6 +4,10 @@ exports.login = (req, res) => {
   res.view();
 }
 
+exports.new = (req, res) => {
+  res.view();
+}
+
 exports.logout = (req, res) => {
   req.logout();
   res.redirect('/');
@@ -31,7 +35,7 @@ exports.register = (req, res) => {
   User.findOne({ normalizedEmail: req.body.email.toLowerCase() }, (err, user) => {
     if (user) {
       req.flash('message', 'Email already used');
-      res.redirect('/users/login');
+      res.redirect('/users/new');
     } else {
       User.create(
         {
@@ -42,7 +46,7 @@ exports.register = (req, res) => {
         },
         (err, user) => {
           req.logIn(user, (err) => {
-            res.redirect('/');
+            res.redirect('/integrations/new');
           })
         }
       )

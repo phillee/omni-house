@@ -32,6 +32,7 @@
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
     "rc": "1.0.1",
+    "request": "^2.75.0",
     "sails": "~0.12.1",
     "sails-disk": "~0.10.9",
     "sails-mongo": "^0.12.1"
