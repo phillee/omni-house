@@ -56,8 +56,8 @@ module.exports = (options) => {
         uri : url.resolve(options.host, path),
         qs : params,
         auth : auth
-      }
-    , (err, resp, body) => {
+      },
+      (err, resp, body) => {
         if (err) {
           if (error) error(err)
           return
@@ -68,6 +68,7 @@ module.exports = (options) => {
         if (success) try {
           jsonBody = JSON.parse(body);
         } catch(err) {
+          console.log('error', err)
           return error(err);
         }
 
