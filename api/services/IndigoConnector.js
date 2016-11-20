@@ -3,10 +3,11 @@ var request = require('request'),
 
 module.exports = (options) => {
   var auth = {
-    user: options.auth.user,
-    pass: options.auth.pass,
-    sendImmediately: false
-  }
+        user: options.auth.user,
+        pass: options.auth.pass,
+        sendImmediately: false
+      },
+      _pointer = this
 
   // the API is picky about characters in the appliance id
   this.encodeName = (v) => {
@@ -22,7 +23,7 @@ module.exports = (options) => {
   }
 
   this.getAppliances = (done) => {
-    this.getDevices(parseDevices);
+    _pointer.getDevices(parseDevices);
 
     function parseDevices(devices) {
       var appliances = devices.map((device) => {
@@ -31,7 +32,7 @@ module.exports = (options) => {
           additionalApplianceDetails : { nameURLEncoded : device.nameURLEncoded },
           // picky about characters in appliance id, "special characters: _ - = # ; : ? @ &"
           // encode it just to be safe
-          applianceId : indigo.encodeName(device.nameURLEncoded),
+          applianceId : _pointer.encodeName(device.nameURLEncoded),
           friendlyDescription : 'None',
           friendlyName : device.name,
           isReachable : true,
@@ -62,11 +63,15 @@ module.exports = (options) => {
           return
         }
 
+        var jsonBody;
+
         if (success) try {
-          success(JSON.parse(body))
+          jsonBody = JSON.parse(body);
         } catch(err) {
-          success()
+          return error(err);
         }
+
+        success(jsonBody);
       }
     )
   }
