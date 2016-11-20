@@ -114,41 +114,28 @@ function (clientId, clientSecret, done) {
     });
 }));
 
-/**
- * BearerStrategy
- *
- * This strategy is used to authenticate users based on an access token (aka a
- * bearer token).  The user must have previously authorized a client
- * application, which is issued an access token to make requests on behalf of
- * the authorizing user.
- */
-passport.use(new BearerStrategy(
-  function(accessToken, done) {
+passport.use(new BearerStrategy((accessToken, done) => {
+  AccessToken
+  .findOne({ token: accessToken })
+  .exec((err, token) => {
+    if (err) { return done(err); }
+    if (!token) { return done(null, false); }
 
-    AccessToken.findOne({token:accessToken}, function(err, token) {
-      if (err) { return done(err); }
-      if (!token) { return done(null, false); }
+    var now = moment().unix();
+    var creationDate = moment(token.createdAt).unix();
 
-      var now = moment().unix();
-      var creationDate = moment(token.createdAt).unix();
+    if (now - creationDate > sails.config.oauth.tokenLife) {
+      AccessToken.destroy({ token: accessToken }, function (err) {
+        if (err) return done(err);
+      });
+      console.log('Token expired');
+      return done(null, false, { message: 'Token expired' });
+    }
 
-      if( now - creationDate > sails.config.oauth.tokenLife ) {
-        AccessToken.destroy({ token: accessToken }, function (err) {
-          if (err) return done(err);
-         });
-         console.log('Token expired');
-         return done(null, false, { message: 'Token expired' });
-       }
-
-       var info = {scope: '*'};
-       User.findOne({
-         id: token.userId
-       })
-       .exec(function (err, user) {
-         User.findOne({
-           id: token.userId
-         },done(err,user,info));
-       });
+    var info = {scope: '*'};
+    User.findOne({ id: token.user })
+    .exec((err, user) => {
+       done(err, user, info);
     });
-  }
-));
+  });
+}));

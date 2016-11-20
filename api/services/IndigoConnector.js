@@ -1,7 +1,7 @@
 var request = require('request'),
     url = require('url')
 
-module.exports = function(options) {
+module.exports = (options) => {
   var auth = {
     user: options.auth.user,
     pass: options.auth.pass,
@@ -19,6 +19,30 @@ module.exports = function(options) {
 
   this.getDevices = (success, error) => {
     makeRequest('/devices.json', {}, success, error)
+  }
+
+  this.getAppliances = (done) => {
+    this.getDevices(parseDevices);
+
+    function parseDevices(devices) {
+      var appliances = devices.map((device) => {
+        return {
+          actions : [ 'turnOn', 'turnOff' ],
+          additionalApplianceDetails : { nameURLEncoded : device.nameURLEncoded },
+          // picky about characters in appliance id, "special characters: _ - = # ; : ? @ &"
+          // encode it just to be safe
+          applianceId : indigo.encodeName(device.nameURLEncoded),
+          friendlyDescription : 'None',
+          friendlyName : device.name,
+          isReachable : true,
+          // unclear if these fields must be present
+          manufacturerName : 'Unknown',
+          modelName : 'Unknown',
+          version : 1
+        }
+      })
+      done(null, appliances);
+    }
   }
 
   this.setDevice = (id, params, success, error) => {

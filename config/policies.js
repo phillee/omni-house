@@ -19,21 +19,13 @@
 var Oauth = require('../api/services/Oauth')
 
 module.exports.policies = {
+  '*': [ 'eventPayloadToken' ],
 
   AuthController : {
     authorize : [ 'isLoggedIn', 'oauthAuthorize' ],
     decision : Oauth.decision(),
     token : Oauth.token()
   }
-
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions (`true` allows public     *
-  * access)                                                                  *
-  *                                                                          *
-  ***************************************************************************/
-
-  // '*': true,
 
   /***************************************************************************
   *                                                                          *
