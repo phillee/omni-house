@@ -35,7 +35,7 @@ function indigoFromIntegration(integration) {
 }
 
 exports.control = (req, res) => {
-  console.log('control', req.body)
+  console.log('control', JSON.stringify(req.body, null, 2))
   var event = req.body.event,
       params = {},
       nameURLEncoded = event.payload.appliance.additionalApplianceDetails.nameURLEncoded
