@@ -46,5 +46,6 @@ module.exports.routes = {
   // learn more
   '/learn-more': 'HomeController.learnMore',
 
-  '/discover': 'DeviceController.discover'
+  '/discover': 'DeviceController.discover',
+  '/control': 'DeviceController.control'
 }
