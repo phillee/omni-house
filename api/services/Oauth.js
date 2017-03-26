@@ -91,45 +91,35 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, do
 
 
 // Exchange refreshToken for access token.
-server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken, scope, done) {
+server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
+  console.log('exchanging, client is', client);
 
-    RefreshToken.findOne({ token: refreshToken }, function(err, token) {
+  RefreshToken.findOne({ token: refreshToken }, (err, token) => {
+    if (err) return done(err);
+    if (!token) return done(null, false);
 
-        if (err) { return done(err); }
-        if (!token) { return done(null, false); }
-        if (!token) { return done(null, false); }
+    User.findOne({id: token.user}, (err, user) => {
+      if (err) return done(err);
+      if (!user) return done(null, false);
 
-        User.findOne({id: token.user}, function(err, user) {
+      // Remove Refresh and Access tokens and create new ones
+      RefreshToken.destroy({ user: user.id, client: client.client }, (err) => {
+        if (err) return done(err);
+        AccessToken.destroy({ user: user.id, client: client.client }, (err) => {
+          if (err) return done(err);
 
-            if (err) { return done(err); }
-            if (!user) { return done(null, false); }
-
-            // Remove Refresh and Access tokens and create new ones
-            RefreshToken.destroy({ user: user.id, client: client.client }, function (err) {
-              if (err) {
+          RefreshToken.create({ user: user.id, client: client.client }, (err, refreshToken) => {
+            if (err) return done(err);
+            AccessToken.create({ user: user.id, client: client.client }, (err, accessToken) => {
+              if(err) {
                 return done(err);
               } else {
-                AccessToken.destroy({ user: user.id, client: client.client }, function (err) {
-                  if (err){
-                    return done(err);
-                  } else {
-                    RefreshToken.create({ user: user.id, client: client.client }, function(err, refreshToken){
-                      if(err){
-                        return done(err);
-                      } else {
-                        AccessToken.create({ user: user.id, client: client.client }, function(err, accessToken){
-                          if(err) {
-                            return done(err);
-                          } else {
-                            done(null, accessToken.token, refreshToken.token, { 'expires_in': sails.config.oauth.tokenLife });
-                          }
-                        });
-                      }
-                    });
-                  }
-                });
+                done(null, accessToken.token, refreshToken.token, { 'expires_in': sails.config.oauth.tokenLife });
               }
-           });
+            });
+          });
         });
+      });
     });
+  });
 }));
