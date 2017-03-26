@@ -94,7 +94,7 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, do
 server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
   console.log('exchanging, client is', client);
 
-  if (!client) reutrn done(null);
+  if (!client) return done(null);
 
   RefreshToken.findOne({ token: refreshToken }, (err, token) => {
     if (err) return done(err);
