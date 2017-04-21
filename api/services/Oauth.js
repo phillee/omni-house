@@ -51,41 +51,32 @@ server.grant(oauth2orize.grant.token(function(client, user, ares, done) {
 }));
 
 // Exchange authorization code for access token
-server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, done) {
-  AuthCode.findOne(
-    { code: code }
-  ).exec((err, code) => {
-   if (err || !code) return done(err)
+server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
+  console.log('exchanging token. client:', client, 'code', code);
 
+  AuthCode
+  .findOne({ code: code })
+  .exec((err, code) => {
+   if (err || !code) return done(err)
    // if (client.client !== code.client) return done(null, false)
 
    // Remove Refresh and Access tokens and create new ones
    RefreshToken.destroy({ user: code.user, client: code.client }, function (err) {
-     if (err) {
-       return done(err);
-     } else {
-       AccessToken.destroy({ user: code.user, client: code.client }, function (err) {
-         if (err){
-           return done(err);
-         } else {
-           RefreshToken.create({ user: code.user, client: code.client }, function(err, refreshToken){
-             if(err){
-               return done(err);
-             } else {
-               AccessToken.create({ user: code.user, client: code.client }, function(err, accessToken){
-                 if(err) {
-                   return done(err);
-                 } else {
-                   return done(null, accessToken.token, refreshToken.token, { 'expires_in': sails.config.oauth.tokenLife });
-                 }
-               });
-             }
-           });
-         }
-       });
-     }
-   });
+     if (err) return done(err);
 
+     AccessToken.destroy({ user: code.user, client: code.client }, function (err) {
+       if (err) return done(err);
+
+       RefreshToken.create({ user: code.user, client: code.client }, function(err, refreshToken){
+          if (err) return done(err);
+          AccessToken.create({ user: code.user, client: code.client }, function(err, accessToken){
+            if (err) return done(err);
+
+            return done(null, accessToken.token, refreshToken.token, { 'expires_in': sails.config.oauth.tokenLife });
+         });
+       });
+     });
+   });
  });
 }));
 
