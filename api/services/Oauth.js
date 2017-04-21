@@ -92,7 +92,7 @@ server.exchange(oauth2orize.exchange.code(function(client, code, redirectURI, do
 
 // Exchange refreshToken for access token.
 server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
-  console.log('exchanging, client is', client);
+  console.log('exchanging, client is', client, 'refresh token', refreshToken, 'scope', scope);
 
   if (!client) return done(null);
 
