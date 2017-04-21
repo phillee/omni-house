@@ -1,4 +1,5 @@
 exports.authorize = (req, res, next) => {
+  console.log('client:', req.oauth2.client)
 	res.view('auth/authorize', { oauth2 : req.oauth2, user: req.user, client: req.oauth2.client })
 }
 

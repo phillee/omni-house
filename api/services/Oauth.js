@@ -14,6 +14,7 @@ server.serializeClient((client, done) => {
 server.deserializeClient((id, done) => {
   console.log('deserializeClient', id);
   Client.findOne({ clientId: id }, (err, client) => {
+    console.log('client is', client)
     if (err) return done(err)
     return done(null, client);
   })
