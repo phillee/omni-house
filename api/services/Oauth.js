@@ -8,16 +8,16 @@ var server = oauth2orize.createServer()
 module.exports = server
 
 server.serializeClient((client, done) => {
-  return done(null, client.id)
+  return done(null, client.clientId);
 })
 
 server.deserializeClient((id, done) => {
-  Client.findOne(id, (err, client) => {
+  console.log('deserializeClient', id);
+  Client.findOne({ clientId: id }, (err, client) => {
     if (err) return done(err)
-      return done(null, client)
-    })
-  }
-)
+    return done(null, client);
+  })
+})
 
 // Generate authorization code
 server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, done) => {
