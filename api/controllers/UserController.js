@@ -13,8 +13,8 @@ exports.logout = (req, res) => {
   res.redirect('/');
 }
 
-exports.authenticate = function(req, res) {
-  passport.authenticate('local', function(err, user, info) {
+exports.authenticate = (req, res) => {
+  passport.authenticate('local', (err, user, info) => {
     if ((err) || (!user)) {
       req.flash('message', 'Incorrect password or email')
       return res.redirect('/users/login');

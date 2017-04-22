@@ -62,15 +62,15 @@ server.exchange(oauth2orize.exchange.code((client, code, redirectURI, done) => {
    // if (client.client !== code.client) return done(null, false)
 
    // Remove Refresh and Access tokens and create new ones
-   RefreshToken.destroy({ user: code.user, client: code.client }, function (err) {
+   RefreshToken.destroy({ user: code.user, client: code.client }, (err) => {
      if (err) return done(err);
 
-     AccessToken.destroy({ user: code.user, client: code.client }, function (err) {
+     AccessToken.destroy({ user: code.user, client: code.client }, (err) => {
        if (err) return done(err);
 
-       RefreshToken.create({ user: code.user, client: code.client }, function(err, refreshToken){
+       RefreshToken.create({ user: code.user, client: code.client }, (err, refreshToken) => {
           if (err) return done(err);
-          AccessToken.create({ user: code.user, client: code.client }, function(err, accessToken){
+          AccessToken.create({ user: code.user, client: code.client }, (err, accessToken) => {
             if (err) return done(err);
 
             return done(null, accessToken.token, refreshToken.token, { 'expires_in': sails.config.oauth.tokenLife });

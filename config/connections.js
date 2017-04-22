@@ -32,14 +32,10 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-  /***************************************************************************
-  *                                                                          *
-  * MongoDB is the leading NoSQL database.                                   *
-  * http://en.wikipedia.org/wiki/MongoDB                                     *
-  *                                                                          *
-  * Run: npm install sails-mongo                                             *
-  *                                                                          *
-  ***************************************************************************/
+  testMongoDb: {
+    adapter: 'sails-mongo',
+    url: 'mongodb://localhost:27017/alexabridge_test'
+  },
 
   mLabMongodbServer: {
     adapter: 'sails-mongo',

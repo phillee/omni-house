@@ -22,7 +22,7 @@
 
 module.exports.routes = {
   '/': 'HomeController.index',
-  '/oauth/token': 'AuthController.token',
+  '/auth/token': 'AuthController.token',
   'GET /auth/authorize': 'AuthController.authorize',
   'POST /auth/decision': 'AuthController.decision',
   // 'POST /login': 'AuthController.authenticate',
