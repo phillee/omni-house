@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET /integrations': 'IntegrationController.list',
   'GET /integrations/new': 'IntegrationController.new',
   'POST /integrations': 'IntegrationController.create',
+  'POST /integrations/:id/delete': 'IntegrationController.delete',
 
   // not for production
   '/test': 'AuthController.test',

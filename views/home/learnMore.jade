@@ -3,6 +3,16 @@ extends ../layout
 block content
   .container
     .col-sm-12
-      h1.mt-30 Why AlexaBridge?
+      h1.mt-30 Why Alexa Bridge?
       p.mt-30.big
-        | hihi
+        | Alexa Bridge serves as an intermediary between Alexa and home automation services that don't support Alexa's authentication mechanism (Oauth), such as Indigo.
+
+        br
+        br
+
+        | Home automation services, such as Indigo, require a username and password to operate devices. This makes integrations such as Alexa inconvenient - nobody wants to provide a password to turn on a light. Alexa Bridge stores credentials to enable interfacing with those devices and provides an Oauth integration with Alexa.
+
+      h2.mt-30 Is Alexa Bridge Secure?
+      p.mt-30.big
+        | The usernames and passwords to Indigo are encrypted in the database, but the service will have to use that data when sending a command on behalf of Alexa. Using Alexa Bridge means you trust whoever is developing the application (me). I also take no responsibility if the service is compromised and bad things happen. Use at your own risk!
+

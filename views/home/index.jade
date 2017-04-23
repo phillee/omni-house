@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  .parallax-window(data-parallax='scroll', data-image-src='/images/alexa.jpg', style='margin-top: -20px; height: 100%')
+  .parallax-window(data-parallax='scroll', data-image-src='/images/alexa.jpg', style='margin-top: -20px; margin-bottom: -20px')
     .container
       .row
         .col-sm-12
@@ -13,7 +13,7 @@ block content
           .image-center.text-center(style='margin-top: 90px')
             img.img-responsive(src='/images/alexa-to-indigo.png')
 
-      .row
-        p.text-center(style='margin-top: 90px')
+      .row.mt-70.mb-70
+        p.text-center
           a.btn.btn-success.btn-lg(href='/users/login') Get Started
           a.btn.btn-default.btn-lg.ml-20(href='/learn-more') Learn More

@@ -3,8 +3,8 @@ var request = require('request'),
 
 module.exports = (options) => {
   var auth = {
-        user: options.auth.user,
-        pass: options.auth.pass,
+        user: options.username,
+        pass: options.password,
         sendImmediately: false
       },
       _pointer = this

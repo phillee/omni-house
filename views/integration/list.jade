@@ -3,11 +3,18 @@ extends ../layout
 block content
   .container
     .col-sm-12
-      h3.form-signin-heading
+      h1.form-signin-heading
         | Integrations
         a.ml-10.btn.btn-sm.btn-success(href='/integrations/new')
           i.fa.fa-plus.mr-5
           | New
 
-      each accessToken in accessTokens
-        pre= JSON.stringify(accessToken, null, 2)
+      each integration in integrations
+        .integration
+          .data
+            pre= JSON.stringify(integration, null, 2)
+
+          form(action='/integrations/#{integration.id}/delete' method='post')
+            button.btn.btn-danger.btn-sm(type='submit')
+              i.fa.fa-times
+          hr

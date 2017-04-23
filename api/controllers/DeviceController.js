@@ -23,15 +23,7 @@ exports.discover = (req, res) => {
 }
 
 function indigoFromIntegration(integration) {
-  var indigoConfig = {
-    auth: {
-      user: integration.username,
-      pass: integration.password
-    },
-    host: integration.url
-  };
-
-  return IndigoConnector(indigoConfig);
+  return IndigoConnector(integration.getDecryptedData());
 }
 
 exports.control = (req, res) => {
