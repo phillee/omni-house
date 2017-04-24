@@ -3,5 +3,5 @@ exports.index = (req, res) => {
 }
 
 exports.learnMore = (req, res) => {
-  res.view();
+  res.view('home/learnMore');
 }
