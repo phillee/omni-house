@@ -37,6 +37,11 @@ module.exports.connections = {
     url: 'mongodb://localhost:27017/alexabridge_test'
   },
 
+  devMongoDb: {
+    adapter: 'sails-mongo',
+    url: 'mongodb://localhost:27017/alexabridge_dev'
+  },
+
   mLabMongodbServer: {
     adapter: 'sails-mongo',
     host: 'ds029466.mlab.com',

@@ -1,6 +1,6 @@
 module.exports = {
   models: {
-    connection: 'mLabMongodbServer'
+    connection: 'devMongoDb'
   },
   encryptionKey: 'development_key'
 }
